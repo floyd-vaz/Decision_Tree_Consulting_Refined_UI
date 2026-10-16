@@ -1,0 +1,206 @@
+/* ───────────────────────────────────────────────────────────────
+   Decision Tree Consulting — refined minimal design layer
+   Cream and sage palette (CCD5AE, E9EDC9, FEFAE0, FAEDCD, D4A373), soft glass.
+   Built for comfortable reading (35–45 yr old decision makers).
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; font-optical-sizing: auto; }
+  h1, h2 { line-height: 1.14; letter-spacing: -0.012em; }
+  h1, h2, h3 { font-weight: 400; }
+  h3 { line-height: 1.3; }
+  p { max-width: 66ch; text-wrap: pretty; }
+  button, input, select, textarea { font-family: var(--font-body); }
+  .uppercase { font-weight: 500; }
+  ::selection { background: rgba(212, 163, 115, 0.3); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  section img, main img { border-radius: 12px; }
+  header img, footer img { border-radius: 0; }
+}
+
+/* Tidy headings on small screens: let text wrap naturally */
+@media (max-width: 768px) { h1 br, h2 br { display: none; } }
+
+/* Nav link — animated underline */
+.nav-link {
+  position: relative; background: none; border: none; cursor: pointer;
+  color: var(--muted-foreground); font-size: 0.93rem; font-weight: 500; padding: 6px 0;
+  transition: color .25s ease;
+}
+.nav-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1.5px; width: 100%;
+  background: var(--foreground); transform: scaleX(0); transform-origin: left;
+  transition: transform .35s cubic-bezier(.22,.61,.36,1);
+}
+.nav-link:hover { color: var(--foreground); }
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* Soft scroll-reveal (motion-site feel, kept subtle) */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Hero entrance */
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .9s cubic-bezier(.22,.61,.36,1) both; }
+.rise-2 { animation-delay: .12s; } .rise-3 { animation-delay: .24s; } .rise-4 { animation-delay: .36s; }
+
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .rise { animation: none; }
+  .marquee-track { animation: none !important; }
+}
+
+
+/* Soft, rounded surfaces (paper-like cards) */
+.rounded-card { border-radius: 16px; }
+
+/* Sentence-case labels (outside @layer so it beats the utility class) */
+.uppercase { text-transform: none !important; letter-spacing: 0.01em !important; }
+
+
+/* ═══ Warm glass layer ═══════════════════════════════════════════ */
+body { background-color: var(--background); }
+/* Flat, single warm tone: no corner glows */
+body::before { content: none; }
+
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 30px -12px rgba(80, 70, 35, .25), inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+
+/* Header: transparent at top, frosted once scrolled, tighter height */
+.glass-nav { transition: background .4s ease, box-shadow .4s ease, border-color .4s ease; border-bottom: 1px solid transparent; }
+.glass-nav nav { transition: height .35s cubic-bezier(.22,.61,.36,1); }
+.glass-nav[data-scrolled="true"] {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom-color: var(--glass-border);
+  box-shadow: 0 10px 30px -18px rgba(80, 70, 35, .35);
+}
+.glass-nav[data-scrolled="true"] nav { height: 64px !important; }
+
+/* Rounded surfaces that used the flat card colour become frosted panels */
+[style*="background-color: var(--card)"][style*="border-radius"],
+.rounded-card {
+  background-color: var(--glass) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
+  border-color: var(--glass-border) !important;
+  box-shadow: 0 10px 34px -20px rgba(80, 70, 35, .3), inset 0 1px 0 rgba(255, 255, 255, .55);
+}
+
+/* Quieter, more minimal chrome */
+section.border-b, div.border-b, footer.border-t { border-color: rgba(46, 42, 27, .07) !important; }
+button.rounded-full { transition: transform .3s cubic-bezier(.22,.61,.36,1), background-color .25s ease, color .25s ease, box-shadow .3s ease; }
+button.rounded-full:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgba(80, 70, 35, .55); }
+button.rounded-full:active { transform: translateY(0); }
+input, textarea, select {
+  background: var(--input-background); border-radius: 16px;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(143, 95, 50, .12); }
+section img, main img { transition: transform .9s cubic-bezier(.22,.61,.36,1); }
+a:hover > img, button:hover > img { transform: scale(1.02); }
+a { transition: color .25s ease; }
+
+/* Page-to-page transition */
+.page-in { animation: pageIn .6s cubic-bezier(.22,.61,.36,1) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* Scroll progress line + back to top */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60;
+  background: linear-gradient(90deg, var(--honey), var(--accent));
+  transform-origin: left; transform: scaleX(0); will-change: transform;
+}
+.to-top {
+  position: fixed; right: 20px; bottom: 20px; z-index: 55; width: 46px; height: 46px; border-radius: 999px;
+  display: grid; place-items: center; cursor: pointer; color: var(--foreground);
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity .35s ease, transform .35s cubic-bezier(.22,.61,.36,1);
+}
+.to-top[data-show="true"] { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-in { animation: none; }
+  button.rounded-full:hover, .to-top:hover { transform: none; }
+  .progress-bar, .to-top { transition: none; }
+}
+
+/* let the ambient warm light show through the root wrapper */
+#root > div.bg-background { background-color: transparent; }
+
+
+/* ═══ More motion ════════════════════════════════════════════════ */
+/* Children of revealed grids rise in one after another */
+.reveal.in .grid > * { animation: rise .8s cubic-bezier(.22,.61,.36,1) backwards; }
+.reveal.in .grid > *:nth-child(2) { animation-delay: .1s; }
+.reveal.in .grid > *:nth-child(3) { animation-delay: .2s; }
+.reveal.in .grid > *:nth-child(4) { animation-delay: .3s; }
+.reveal.in .grid > *:nth-child(5) { animation-delay: .4s; }
+.reveal.in .grid > *:nth-child(6) { animation-delay: .5s; }
+
+/* Panels lift gently on hover */
+[style*="background-color: var(--card)"][style*="border-radius"] { transition: transform .45s cubic-bezier(.22,.61,.36,1), box-shadow .45s ease; }
+[style*="background-color: var(--card)"][style*="border-radius"]:hover { transform: translateY(-5px); box-shadow: 0 22px 44px -22px rgba(80, 60, 25, .4), inset 0 1px 0 rgba(255,255,255,.6); }
+
+/* Nav links: underline draws in from the left */
+.glass-nav nav button:not(.rounded-full) {
+  background: linear-gradient(var(--accent), var(--accent)) left bottom / 0% 1.5px no-repeat;
+  transition: background-size .4s cubic-bezier(.22,.61,.36,1), color .25s ease; padding-bottom: 3px;
+}
+.glass-nav nav button:not(.rounded-full):hover { background-size: 100% 1.5px; color: var(--accent); }
+
+/* Client strip pauses when hovered */
+.marquee-track:hover { animation-play-state: paused !important; }
+
+/* Hero italic word gently shimmers */
+h1 em, h1 i { background: linear-gradient(100deg, var(--accent) 30%, var(--honey) 50%, var(--accent) 70%); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .reveal.in .grid > *, h1 em, h1 i { animation: none; } }
+
+/* ═══ Reference-inspired styling only (no layout or content changes) ═══ */
+/* Small accent labels become outlined glass pills */
+p.uppercase[style*="var(--accent)"] {
+  display: inline-flex; align-items: center; width: fit-content;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: .75rem; letter-spacing: .08em;
+  border: 1px solid rgba(143, 95, 50, .35);
+  background: rgba(255, 250, 235, .45);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+
+/* Cards: quieter, tinted surface with a hairline instead of heavy borders */
+[style*="background-color: var(--card)"][style*="border-radius"] {
+  border: 1px solid rgba(255, 255, 255, .5) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 8px 24px -18px rgba(80, 60, 25, .25) !important;
+}
+
+/* Stat blocks: lighter dividers, softer tint */
+[style*="background-color: var(--card)"]:not([style*="border-radius"]) { background-color: rgba(246, 224, 181, .55) !important; }
+
+/* Refined headings and body rhythm */
+h1, h2, h3 { letter-spacing: -0.015em; text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Buttons: crisper dark pill + frosted outline pill */
+button.rounded-full { font-weight: 500; letter-spacing: .005em; }
+button.rounded-full[style*="border"] { background: rgba(255, 250, 235, .45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
