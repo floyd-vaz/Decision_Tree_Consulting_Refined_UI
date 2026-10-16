@@ -481,7 +481,7 @@ export default function App() {
               ))}
             </div>
             <div className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-              © 2025 Decision Tree Consulting. All rights reserved.
+              © 2026 Decision Tree Consulting. All rights reserved.
             </div>
           </div>
         </div>
@@ -1434,14 +1434,14 @@ function InsightsPage({ onCTA }: { onCTA: () => void }) {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-10">
             <article
-              className="lg:col-span-7 cursor-pointer group overflow-hidden"
+              className="lg:col-span-12 lg:grid lg:grid-cols-2 cursor-pointer group overflow-hidden"
               onClick={() => { setActivePost(featured.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: 16 }}
             >
-              <div className="aspect-[16/9] overflow-hidden" style={{ backgroundColor: "var(--muted)" }}>
+              <div className="aspect-[16/9] lg:aspect-auto lg:h-full overflow-hidden" style={{ backgroundColor: "var(--muted)" }}>
                 <img src={(featured as any).image} alt={featured.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
-              <div className="p-7 lg:p-9">
+              <div className="p-7 lg:p-12 flex flex-col justify-center">
                 <p className="text-sm tracking-[0.1em] uppercase mb-4" style={{ color: "var(--accent)" }}>{featured.category}</p>
                 <h2 className="leading-tight mb-5" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.55rem, 2.6vw, 2.55rem)", fontWeight: 400, letterSpacing: "-0.02em" }}>
                   {featured.title}
@@ -1452,27 +1452,6 @@ function InsightsPage({ onCTA }: { onCTA: () => void }) {
                 </div>
               </div>
             </article>
-
-            <aside className="lg:col-span-5 flex flex-col justify-between p-7 lg:p-9" style={{ backgroundColor: "var(--secondary)", border: "1px solid var(--border)" }}>
-              <div>
-                <p className="text-sm tracking-[0.1em] uppercase mb-6" style={{ color: "var(--accent)" }}>Topics</p>
-                <div className="space-y-4">
-                  {[
-                    "Real Estate Project Branding",
-                    "Annual Reports & Publications",
-                    "Corporate Brand Communication",
-                    "Websites, Content & Positioning",
-                  ].map((topic) => (
-                    <div key={topic} className="py-4 border-b" style={{ borderColor: "var(--border)" }}>
-                      <span className="text-base" style={{ color: "var(--foreground)" }}>{topic}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <p className="text-base leading-relaxed mt-10" style={{ color: "var(--muted-foreground)" }}>
-                This section can be extended into a regularly updated blog. In the current static build, new articles can be added in the website source and redeployed.
-              </p>
-            </aside>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
@@ -1493,8 +1472,8 @@ function InsightsPage({ onCTA }: { onCTA: () => void }) {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-            {BLOG_POSTS.map((post) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+            {BLOG_POSTS.slice(1).map((post) => (
               <article
                 key={post.id}
                 className="group cursor-pointer flex flex-col overflow-hidden"
